@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>L'chaim — Nourish the Whole Person</title>
+<title>L'chaim â€” Nourish the Whole Person</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -278,7 +278,7 @@
 </header>
 
 <section class="hero">
-  <p class="hero-eyebrow">To life —</p>
+  <p class="hero-eyebrow">To life â€”</p>
   <h1>Food is where the whole-person work begins.</h1>
   <p class="sub">Wholesome meals today. Mind, connection, and spirit as we grow together. One table, four pillars.</p>
   <div class="hero-ctas">
@@ -316,7 +316,7 @@
     <p class="toast-label">Today's reflection</p>
     <p class="toast-quote" id="toastQuote">Tap play to hear today's thought.</p>
     <div class="toast-controls">
-      <button class="toast-play" id="playBtn" aria-label="Play reflection">▶</button>
+      <button class="toast-play" id="playBtn" aria-label="Play reflection">â–¶</button>
       <button class="toast-next" id="nextBtn">Next reflection</button>
     </div>
   </div>
@@ -332,11 +332,11 @@
 
 <footer>
   <div class="brand">L'chaim<span style="color:var(--honey-light); font-style:italic;">.</span></div>
-  <p>Nourishing body, mind, connection &amp; spirit — one meal at a time.</p>
+  <p>Nourishing body, mind, connection &amp; spirit â€” one meal at a time.</p>
 </footer>
 
 <div class="cart-bar" id="cartBar">
-  <span id="cartBarText">1 item · $12</span>
+  <span id="cartBarText">1 item Â· $12</span>
   <button class="btn btn-primary">Checkout</button>
 </div>
 
@@ -344,7 +344,7 @@
   // ==== BACKEND CONFIG ====
   // Paste your Apps Script Web App deployment URL here (see code.gs setup notes).
   // Leave blank to run on local demo data only.
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzFgykpE0WPjkbgL8OHZ9_V3M9yczcayCHvlfQJMQxC-j737FN5lDq8AD6Yipa1JXIB/exec';
+  const WEBAPP_URL = '';
 
   async function apiGet(action) {
     if (!WEBAPP_URL) return null;
@@ -380,11 +380,11 @@
 
   // ---- Menu data & cart ----
   const localPlates = [
-    {emoji:'🥗', tag:'Garden', name:'Harvest Bowl', desc:'Roasted roots, farro, tahini drizzle.', price:11},
-    {emoji:'🍲', tag:'Comfort', name:'Golden Broth Soup', desc:'Turmeric chicken broth, fresh herbs.', price:9},
-    {emoji:'🥙', tag:'Light', name:'Herbed Falafel Wrap', desc:'Crisp falafel, pickled turnip, lemon.', price:10},
-    {emoji:'🍛', tag:'Hearty', name:'Braised Lentil Plate', desc:'Slow braised lentils, charred greens.', price:12},
-    {emoji:'🥧', tag:'Sweet', name:'Honey Fig Tart', desc:'Whole wheat crust, fresh fig, honey.', price:6},
+    {emoji:'ðŸ¥—', tag:'Garden', name:'Harvest Bowl', desc:'Roasted roots, farro, tahini drizzle.', price:11},
+    {emoji:'ðŸ²', tag:'Comfort', name:'Golden Broth Soup', desc:'Turmeric chicken broth, fresh herbs.', price:9},
+    {emoji:'ðŸ¥™', tag:'Light', name:'Herbed Falafel Wrap', desc:'Crisp falafel, pickled turnip, lemon.', price:10},
+    {emoji:'ðŸ›', tag:'Hearty', name:'Braised Lentil Plate', desc:'Slow braised lentils, charred greens.', price:12},
+    {emoji:'ðŸ¥§', tag:'Sweet', name:'Honey Fig Tart', desc:'Whole wheat crust, fresh fig, honey.', price:6},
   ];
   const menuScroll = document.getElementById('menuScroll');
   const cart = []; // {name, price}
@@ -393,7 +393,7 @@
   async function loadMenu() {
     const remote = await apiGet('getmenu');
     const plates = remote && remote.length
-      ? remote.map(r => ({ emoji: r.Emoji || '🍽️', tag: r.Tag, name: r.Name, desc: r.Description, price: Number(r.Price) }))
+      ? remote.map(r => ({ emoji: r.Emoji || 'ðŸ½ï¸', tag: r.Tag, name: r.Name, desc: r.Description, price: Number(r.Price) }))
       : localPlates;
 
     plates.forEach((p, i) => {
@@ -425,10 +425,10 @@
     cart.push({ name, price }); cartTotal += price;
     cartCountEl.textContent = cart.length;
     cartCountEl.classList.add('show');
-    e.target.textContent = '✓';
+    e.target.textContent = 'âœ“';
     e.target.classList.add('added');
     setTimeout(() => { e.target.textContent = '+'; e.target.classList.remove('added'); }, 900);
-    cartBarText.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} · $${cartTotal}`;
+    cartBarText.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} Â· $${cartTotal}`;
     cartBar.classList.add('show');
   });
 
@@ -436,9 +436,10 @@
     if (!cart.length) return;
     const name = prompt('Name for the order:');
     if (!name) return;
-    const email = prompt('Email for order confirmation:');
-    if (!email) return;
-    const result = await apiPost('placeorder', { name, email, items: cart, total: cartTotal });
+    const phone = prompt('Phone number (required, for delivery/pickup contact):');
+    if (!phone) return;
+    const email = prompt('Email for order confirmation (optional â€” leave blank to skip):');
+    const result = await apiPost('placeorder', { name, phone, email: email || '', items: cart, total: cartTotal });
     if (result.ok) {
       alert(`Thanks, ${name}! Order ${result.orderId} received.`);
       cart.length = 0; cartTotal = 0;
@@ -453,10 +454,10 @@
 
   // ---- Pillars (Body = Phase 1 content only; Mind/Social/Spirit offer Phase 2-3 booking) ----
   const localPillars = [
-    {icon:'🌿', name:'Body', text:'Fresh, wholesome meals sourced and prepared with care — nourishment as the daily foundation.', bookable:false},
-    {icon:'🧠', name:'Mind', text:'Guided reflection and coaching to build mental clarity and resilience, one small practice at a time.', bookable:true},
-    {icon:'🤝', name:'Social', text:'Shared tables and community gatherings — because the whole-person work happens alongside others.', bookable:true},
-    {icon:'✨', name:'Spirit', text:'Daily moments of meaning and gratitude, woven into the rhythm of an ordinary day.', bookable:true},
+    {icon:'ðŸŒ¿', name:'Body', text:'Fresh, wholesome meals sourced and prepared with care â€” nourishment as the daily foundation.', bookable:false},
+    {icon:'ðŸ§ ', name:'Mind', text:'Guided reflection and coaching to build mental clarity and resilience, one small practice at a time.', bookable:true},
+    {icon:'ðŸ¤', name:'Social', text:'Shared tables and community gatherings â€” because the whole-person work happens alongside others.', bookable:true},
+    {icon:'âœ¨', name:'Spirit', text:'Daily moments of meaning and gratitude, woven into the rhythm of an ordinary day.', bookable:true},
   ];
   const pillarsList = document.getElementById('pillarsList');
 
@@ -499,7 +500,7 @@
     if (!email) return;
     const result = await apiPost('bookcoaching', { name, email, pillar });
     alert(result.ok
-      ? `Thanks, ${name}! Request ${result.bookingId} received — we'll follow up by email.`
+      ? `Thanks, ${name}! Request ${result.bookingId} received â€” we'll follow up by email.`
       : 'Demo mode: no backend connected yet, so this request was not saved. (' + result.error + ')');
   });
 
@@ -507,7 +508,7 @@
 
   // ---- Daily toast reflection ----
   const localReflections = [
-    "Gratitude is a practice, not a feeling — begin the meal by naming one good thing.",
+    "Gratitude is a practice, not a feeling â€” begin the meal by naming one good thing.",
     "The table is the oldest classroom. Sit a little longer today.",
     "Nourish the body first; the mind follows what the body is given.",
     "A blessing said slowly is worth more than one said quickly.",
@@ -520,11 +521,11 @@
   document.getElementById('nextBtn').addEventListener('click', () => {
     rIndex = (rIndex + 1) % reflections.length;
     toastQuote.textContent = reflections[rIndex];
-    playBtn.textContent = '▶';
+    playBtn.textContent = 'â–¶';
   });
   playBtn.addEventListener('click', () => {
     toastQuote.textContent = reflections[rIndex];
-    playBtn.textContent = playBtn.textContent === '▶' ? '❚❚' : '▶';
+    playBtn.textContent = playBtn.textContent === 'â–¶' ? 'âšâš' : 'â–¶';
   });
 
   async function loadReflections() {
@@ -535,9 +536,9 @@
 
   // ---- Stories ----
   const localStories = [
-    {quote:'"The soup after a long shift feels like someone thought of me."', who:'— Dana, 3 months in'},
-    {quote:'"I started for the food and stayed for the Tuesday reflections."', who:'— Marcus'},
-    {quote:'"My kids ask for the fig tart by name now."', who:'— Priya'},
+    {quote:'"The soup after a long shift feels like someone thought of me."', who:'â€” Dana, 3 months in'},
+    {quote:'"I started for the food and stayed for the Tuesday reflections."', who:'â€” Marcus'},
+    {quote:'"My kids ask for the fig tart by name now."', who:'â€” Priya'},
   ];
   const storiesList = document.getElementById('storiesList');
 
