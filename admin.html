@@ -1,113 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>L'chaim Logo - JPEG Preview</title>
-    <style>
-        body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-        }
-        .container {
-            background: #ffffff;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            text-align: center;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #eee;
-        }
-        .btn {
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #2C3E35;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn:hover {
-            background-color: #4A6B5D;
-        }
-    </style>
+<base target="_top">
+<meta charset="utf-8">
+<title>DISC Leadership Profile (admin)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#142033;--paper:#F2F4F7;--line:#D3D9E1;--muted:#586477;--d:#D93A3A;--i:#E59A00;--s:#2E9E6B;--c:#2F6FE0;
+    --ui:'Bricolage Grotesque',system-ui,sans-serif;--read:'Source Serif 4',Georgia,serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.5}
+  h1,h2,h3{font-weight:800;line-height:1.15;margin:0;letter-spacing:-.02em}
+  p{margin:0 0 1em}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--c);outline-offset:2px}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:16px clamp(16px,4vw,40px);border-bottom:1px solid var(--line);background:#fff;gap:12px;flex-wrap:wrap}
+  .brand{font-weight:800}
+  .logo{height:30px;width:auto;display:block}
+  main{max-width:1100px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,40px)}
+  .btn{border:0;border-radius:999px;padding:12px 24px;font-weight:700;background:var(--ink);color:#fff;min-height:46px}
+  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+  label{display:grid;gap:6px;font-weight:600;font-size:15px}
+  input,select{font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;min-height:46px}
+  .err{color:#B3261E;font-weight:600;min-height:1.4em}
+  .gate{max-width:420px;display:grid;gap:14px}
+  .toolbar{display:flex;gap:14px;flex-wrap:wrap;align-items:end;margin-bottom:28px}
+  .kpis{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:32px}
+  .kpi b{display:block;font-size:40px;font-weight:800;line-height:1}
+  .kpi span{color:var(--muted);font-size:14px}
+  .grid{display:grid;gap:36px}
+  @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  h2{font-size:24px;margin-bottom:14px}
+  .bar{display:grid;grid-template-columns:150px 1fr 40px;gap:12px;align-items:center;font-weight:600;margin-bottom:8px}
+  .track{height:14px;background:#E2E7ED;border-radius:8px;overflow:hidden}
+  .track i{display:block;height:100%}
+  @media(max-width:480px){.bar{grid-template-columns:110px 1fr 34px;font-size:14px}}
+  .wheel{width:100%;max-width:380px;display:block;margin:0 auto}
+  .wheel .wl{font:800 30px var(--ui)}
+  .wheel .ax{font:600 10px var(--ui);fill:var(--muted)}
+  .legend{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+  .insight{border-left:8px solid var(--ic);padding:2px 0 2px 14px;margin-bottom:18px}
+  .insight h3{font-size:18px;margin-bottom:4px}
+  .insight p{font-family:var(--read);font-size:17px;margin:0}
+  .tablewrap{overflow-x:auto;margin-top:36px;border:1px solid var(--line);background:#fff}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:760px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{background:#E9EDF2}
+  .pill{display:inline-block;min-width:28px;text-align:center;font-weight:800;color:#fff;border-radius:6px;padding:1px 8px}
+  .note{color:var(--muted);font-size:14px;max-width:640px}
+  .center{text-align:center;padding:60px 0}
+</style>
 </head>
 <body>
-
-    <div class="container">
-        <h2>L'chaim Logo (JPEG Output)</h2>
-        <p>Rendered on a solid white background</p>
-        <br>
-        <!-- The converted JPEG image will display here -->
-        <img id="jpgOutput" alt="L'chaim Logo JPEG">
-        <br>
-        <a id="downloadBtn" class="btn" download="lchaim-logo.jpg">Download JPEG</a>
-    </div>
-
-    <!-- Hidden SVG Source Code -->
-    <svg id="svgLogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" width="800" height="240" style="display: none;">
-      <rect width="100%" height="100%" fill="#FFFFFF"/>
-      <g transform="translate(30, 10) scale(1.65)">
-        <path d="M 55 18 L 55 10 M 39 24 L 34 19 M 71 24 L 76 19 M 28 40 L 20 38 M 82 40 L 90 38" 
-              stroke="#D4A359" stroke-width="2.6" stroke-linecap="round" opacity="0.9"/>
-        <path d="M 30 65 A 28 28 0 1 1 80 65" 
-              fill="none" stroke="#2C3E35" stroke-width="4.2" stroke-linecap="round"/>
-        <path d="M 55 38 C 36 55 32 78 55 94 C 78 78 74 55 55 38 Z" 
-              fill="#4A6B5D" opacity="0.95"/>
-        <path d="M 55 94 C 50 81 50 65 55 54 C 60 65 60 81 55 94 Z" 
-              fill="#C87D55"/>
+<header class="top">
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <svg class="logo" viewBox="0 0 540 120" role="img" aria-label="L'chaim: Nourishing Life &amp; Spirit">
+      <g transform="translate(10, 0)">
+        <path d="M 55 18 L 55 10 M 39 24 L 34 19 M 71 24 L 76 19 M 28 40 L 20 38 M 82 40 L 90 38"
+              stroke="#D4A359" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+        <path d="M 30 65 A 28 28 0 1 1 80 65"
+              fill="none" stroke="#2C3E35" stroke-width="3.8" stroke-linecap="round"/>
+        <path d="M 55 38 C 36 55 32 78 55 94 C 78 78 74 55 55 38 Z" fill="#4A6B5D" opacity="0.95"/>
+        <path d="M 55 94 C 50 81 50 65 55 54 C 60 65 60 81 55 94 Z" fill="#C87D55"/>
       </g>
-      <text x="225" y="128" 
-            font-family="'Cinzel', 'Playfair Display', 'Georgia', serif" 
-            font-size="68" 
-            font-weight="700" 
-            letter-spacing="3.5" 
-            fill="#2C3E35">L'chaim</text>
-      <text x="228" y="165" 
-            font-family="'Inter', 'Helvetica Neue', 'Arial', sans-serif" 
-            font-size="16" 
-            font-weight="600" 
-            letter-spacing="6.5" 
-            fill="#C87D55" 
-            opacity="0.95">NOURISHING LIFE &amp; SPIRIT</text>
+      <text x="125" y="66" font-family="'Cinzel', Georgia, serif" font-size="44" font-weight="700" letter-spacing="2.8" fill="#2C3E35">L'chaim</text>
+      <text x="127" y="88" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" letter-spacing="4.5" fill="#C87D55" opacity="0.95">NOURISHING LIFE &amp; SPIRIT</text>
     </svg>
+    <span style="width:1.5px;height:22px;background:var(--line)"></span>
+    <span class="brand" style="font-size:14px;color:var(--muted)">DISC Leadership Profile: admin</span>
+  </div>
+</header>
+<main id="app"></main>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const svgElement = document.getElementById('svgLogo');
-            const svgString = new XMLSerializer().serializeToString(svgElement);
-            const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-            const url = URL.createObjectURL(svgBlob);
+<script src="config.js"></script>
+<script>
+const $ = (s, el) => (el || document).querySelector(s);
+const app = $('#app');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const call = (fn, params) => fetch(CONFIG.API_URL, {
+  method: 'POST',
+  body: JSON.stringify({ fn, ...(params || {}) })
+})
+  .then(res => res.json())
+  .then(data => {
+    if (!data || !data.ok) throw new Error((data && data.error) || 'Something went wrong.');
+    return data.data;
+  })
+  .catch(err => { throw new Error(err.message || 'Could not reach the server. Please try again.'); });
+const COLORS = { D:'var(--d)', I:'var(--i)', S:'var(--s)', C:'var(--c)' };
+const KEYS = ['D','I','S','C'];
+let DATA = null, KEY = '';
 
-            const img = new Image();
-            img.onload = function () {
-                const canvas = document.createElement('canvas');
-                canvas.width = 1600; // High resolution JPEG export
-                canvas.height = 480;
-                
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, canvas.width, canvas.height); // Ensures opaque white background
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+function gate(msg) {
+  app.innerHTML = `
+  <form class="gate" id="gateForm">
+    <h2>Admin access</h2>
+    <p class="note">Enter the ADMIN_KEY from your script properties. This page shows names and emails, so share the key carefully.</p>
+    <label>Admin key<input id="key" type="password" autocomplete="off" required></label>
+    <p class="err" id="err" role="alert">${esc(msg || '')}</p>
+    <button class="btn" type="submit">Open dashboard</button>
+  </form>`;
+  $('#gateForm').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    KEY = $('#key').value;
+    app.innerHTML = '<p class="center">Loading results</p>';
+    try { DATA = await call('adminSummary', { key: KEY }); dash(''); }
+    catch (e) { gate(e.message); }
+  });
+}
 
-                const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.95);
-                
-                document.getElementById('jpgOutput').src = jpegDataUrl;
-                document.getElementById('downloadBtn').href = jpegDataUrl;
-                
-                URL.revokeObjectURL(url);
-            };
-            img.src = url;
-        });
-    </script>
+function dotPos(p) {
+  let x = (p.I + p.S - p.D - p.C) / 140, y = (p.D + p.I - p.S - p.C) / 140;
+  const r = Math.hypot(x, y); if (r > 1) { x /= r; y /= r; }
+  return { x: 150 + x * 100, y: 150 - y * 100 };
+}
+function wheel(people, avg) {
+  const dots = people.map(p => { const d = dotPos(p);
+    return `<circle cx="${d.x.toFixed(1)}" cy="${d.y.toFixed(1)}" r="6" fill="${COLORS[p.primary]}" fill-opacity=".75" stroke="#fff" stroke-width="1.5"><title>${esc(p.name)}</title></circle>`; }).join('');
+  const a = avg ? dotPos(avg) : null;
+  return `<svg class="wheel" viewBox="0 0 300 300" role="img" aria-label="Team wheel: each dot is a person, the large dark dot is the team average.">
+    <path d="M150 150 L150 32 A118 118 0 0 0 32 150Z" fill="var(--d)" fill-opacity=".2"/>
+    <path d="M150 150 L150 32 A118 118 0 0 1 268 150Z" fill="var(--i)" fill-opacity=".28"/>
+    <path d="M150 150 L268 150 A118 118 0 0 1 150 268Z" fill="var(--s)" fill-opacity=".22"/>
+    <path d="M150 150 L150 268 A118 118 0 0 1 32 150Z" fill="var(--c)" fill-opacity=".2"/>
+    <circle cx="150" cy="150" r="118" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+    <path d="M150 32V268M32 150H268" stroke="var(--ink)" stroke-opacity=".35"/>
+    <text class="wl" x="98" y="112" text-anchor="middle" fill="var(--d)" fill-opacity=".5">D</text>
+    <text class="wl" x="202" y="112" text-anchor="middle" fill="var(--i)" fill-opacity=".6">I</text>
+    <text class="wl" x="202" y="202" text-anchor="middle" fill="var(--s)" fill-opacity=".5">S</text>
+    <text class="wl" x="98" y="202" text-anchor="middle" fill="var(--c)" fill-opacity=".5">C</text>
+    <text class="ax" x="150" y="20" text-anchor="middle">Active</text>
+    <text class="ax" x="150" y="288" text-anchor="middle">Reflective</text>
+    <text class="ax" x="3" y="153">Tasks</text>
+    <text class="ax" x="297" y="153" text-anchor="end">People</text>
+    ${dots}
+    ${a ? `<circle cx="${a.x.toFixed(1)}" cy="${a.y.toFixed(1)}" r="11" fill="var(--ink)" stroke="#fff" stroke-width="3"><title>Team average</title></circle>` : ''}
+  </svg>`;
+}
+
+function dash(team) {
+  const all = DATA.people;
+  const teams = [...new Set(all.map(p => p.team).filter(Boolean))].sort();
+  const people = team ? all.filter(p => p.team === team) : all;
+  const n = people.length;
+  const avg = {}; KEYS.forEach(k => avg[k] = n ? Math.round(people.reduce((s, p) => s + p[k], 0) / n) : 50);
+  const counts = {}; KEYS.forEach(k => counts[k] = people.filter(p => p.primary === k).length);
+
+  const insights = [];
+  KEYS.forEach(k => {
+    if (n >= 3 && avg[k] >= 56) insights.push([k, `High ${DATA.labels[k]} (average ${avg[k]})`, DATA.insights[k].high]);
+    else if (n >= 3 && avg[k] <= 44) insights.push([k, `Low ${DATA.labels[k]} (average ${avg[k]})`, DATA.insights[k].low]);
+  });
+  const missing = KEYS.filter(k => n >= 4 && counts[k] === 0);
+
+  app.innerHTML = `
+  <div class="toolbar">
+    <label>Team
+      <select id="team"><option value="">All participants</option>${teams.map(t => `<option ${t === team ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+    </label>
+    <button class="btn ghost" id="refresh" type="button">Refresh</button>
+    <button class="btn" id="csv" type="button">Download CSV</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><b>${n}</b><span>${n === 1 ? 'participant' : 'participants'}</span></div>
+    ${KEYS.map(k => `<div class="kpi"><b style="color:${COLORS[k]}">${counts[k]}</b><span>lead with ${esc(DATA.labels[k])}</span></div>`).join('')}
+  </div>
+
+  ${n === 0 ? '<p class="note">No results yet for this selection.</p>' : `
+  <div class="grid">
+    <section>
+      <h2>Team wheel</h2>
+      ${wheel(people, avg)}
+      <p class="legend">Each dot is a person, coloured by primary style. The dark dot is the team average.</p>
+    </section>
+    <section>
+      <h2>Average scores</h2>
+      ${KEYS.map(k => `<div class="bar"><span>${k} ${esc(DATA.labels[k])}</span><div class="track"><i style="width:${avg[k]}%;background:${COLORS[k]}"></i></div><b>${avg[k]}</b></div>`).join('')}
+      <p class="note">50 is balanced. Styles at 56 or above, or 44 or below, trigger the notes below once there are at least three people.</p>
+      <h2 style="margin-top:28px">What this means for the team</h2>
+      ${insights.length ? insights.map(i => `<div class="insight" style="--ic:${COLORS[i[0]]}"><h3>${esc(i[1])}</h3><p>${esc(i[2])}</p></div>`).join('') : `<p class="note">${n < 3 ? 'Add at least three results to see team insights.' : 'The team is fairly balanced across all four styles.'}</p>`}
+      ${missing.length ? `<div class="insight" style="--ic:var(--ink)"><h3>No primary ${missing.map(k => esc(DATA.labels[k])).join(' or ')}</h3><p>Nobody on this team leads with ${missing.map(k => esc(DATA.labels[k])).join(' or ')}. Decide who will cover that perspective in decisions.</p></div>` : ''}
+    </section>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Name</th><th>Email</th><th>Team</th><th>Role</th><th>Primary</th><th>Secondary</th><th>D</th><th>I</th><th>S</th><th>C</th><th>Date</th><th>ID</th></tr></thead>
+      <tbody>
+      ${people.slice().reverse().map(p => `<tr>
+        <td>${esc(p.name)}</td><td>${esc(p.email)}</td><td>${esc(p.team)}</td><td>${esc(p.role)}</td>
+        <td><span class="pill" style="background:${COLORS[p.primary]}">${esc(p.primary)}</span></td>
+        <td>${p.secondary ? `<span class="pill" style="background:${COLORS[p.secondary]}">${esc(p.secondary)}</span>` : ''}</td>
+        <td>${p.D}</td><td>${p.I}</td><td>${p.S}</td><td>${p.C}</td><td>${esc(p.date)}</td><td>${esc(p.id)}</td></tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`}`;
+
+  $('#team').addEventListener('change', e => dash(e.target.value));
+  $('#refresh').addEventListener('click', async () => {
+    try { DATA = await call('adminSummary', { key: KEY }); dash($('#team').value); } catch (e) { gate(e.message); }
+  });
+  $('#csv').addEventListener('click', () => {
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    // A leading =, +, - or @ would run as a formula in Excel or Sheets, so prefix a quote.
+    const safe = v => /^[=+\-@]/.test(String(v)) ? "'" + v : v;
+    const head = ['ID','Date','Name','Email','Team','Role','Primary','Secondary','D','I','S','C'];
+    const rows = people.map(p => [p.id,p.date,p.name,p.email,p.team,p.role,p.primary,p.secondary,p.D,p.I,p.S,p.C].map(safe).map(q).join(','));
+    const blob = new Blob([head.map(q).join(',') + '\n' + rows.join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'disc-results' + (team ? '-' + team.replace(/\W+/g, '-') : '') + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+}
+
+gate('');
+</script>
 </body>
 </html>
