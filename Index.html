@@ -141,6 +141,7 @@
 <script src="config.js"></script>
 <script>
 /* ---------- helpers ---------- */
+const CONFIG  
 const $ = (s, el) => (el || document).querySelector(s);
 const app = $('#app');
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
