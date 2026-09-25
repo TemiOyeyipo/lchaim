@@ -141,7 +141,7 @@
 <script src="config.js"></script>
 <script>
 /* ---------- helpers ---------- */
-const CONFIG  
+const CONFIG = {API_URL: 'https://script.google.com/macros/s/AKfycbw0m9jlzvZ45-V6ET_TTJt2IUWWVhj8mt8x2Kv6NaHFuPxYzZSwFJsr6LLIxxXFTJj0/exec'};
 const $ = (s, el) => (el || document).querySelector(s);
 const app = $('#app');
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
