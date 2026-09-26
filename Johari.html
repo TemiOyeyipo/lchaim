@@ -184,9 +184,12 @@ async function viewStart(msg) {
   });
 }
 
-function viewInvite(res) {
-  const peerLink = res.peerLink || `${location.origin}${location.pathname.replace(/johari\.html$/, 'johari-peer.html')}?s=${res.sessionId}`;
-  const selfLink = res.selfLink || `${location.origin}${location.pathname.replace(/johari\.html$/, 'johari.html')}?s=${res.sessionId}`;
+  function viewInvite(res) {
+  // Build from the current directory, not by guessing the current filename/extension —
+  // robust even if this page is served without ".html" (a "pretty URL" host).
+  const dir = location.href.slice(0, location.href.lastIndexOf('/') + 1).split('?')[0].split('#')[0];
+  const peerLink = res.peerLink || `${dir}johari-peer.html?s=${res.sessionId}`;
+  const selfLink = res.selfLink || `${dir}johari.html?s=${res.sessionId}`;
   app.innerHTML = `
     <h1 class="page">Your invite link is ready.</h1>
     <p class="lede">Send this to a few colleagues — a manager, a peer, someone you work with often. We also emailed it to you.</p>
@@ -202,6 +205,7 @@ function viewInvite(res) {
     viewAuth(res.sessionId);
   });
 }
+
 
 /* ---------- Reopen / results ---------- */
 function viewAuth(sessionId, msg) {
