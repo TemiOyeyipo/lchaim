@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<title>Johari Window — Give feedback</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#142033; --paper:#F2F4F7; --white:#fff; --line:#D3D9E1; --muted:#586477;
+    --ui:'Bricolage Grotesque', system-ui, sans-serif;
+    --read:'Source Serif 4', Georgia, serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:17px;line-height:1.5}
+  h1,h2,h3{font-weight:800;line-height:1.15;margin:0;letter-spacing:-.02em}
+  p{margin:0 0 1em}
+  button{font:inherit;color:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+
+  .top{display:flex;align-items:center;gap:14px;padding:16px clamp(16px,4vw,40px);border-bottom:1px solid var(--line);background:var(--white)}
+  .logo{height:34px;width:auto;display:block}
+  main{max-width:820px;margin:0 auto;padding:clamp(20px,5vw,56px) clamp(16px,4vw,40px)}
+  footer{max-width:820px;margin:0 auto;padding:0 clamp(16px,4vw,40px) 40px;color:var(--muted);font-size:14px}
+
+  .btn{display:inline-block;border:0;border-radius:999px;padding:14px 28px;font-weight:700;background:var(--ink);color:#fff;min-height:48px}
+  .btn[disabled]{opacity:.35;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+
+  h1.page{font-size:clamp(30px,5.5vw,46px);margin-bottom:12px}
+  .lede{font-family:var(--read);font-size:19px;color:#2b3850;max-width:38em}
+  .fine{font-size:14px;color:var(--muted);margin:0}
+  .err{color:#B3261E;font-weight:600;min-height:1.4em;margin:0}
+
+  label{display:grid;gap:6px;font-weight:600;font-size:15px;max-width:360px;margin-bottom:18px}
+  select{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;min-height:48px}
+
+  .picker-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+  .count{font-weight:700;font-size:15px}
+  .grid{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;background:#fff;font-weight:600;font-size:15px;min-height:44px}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip[disabled]{opacity:.35;cursor:not-allowed}
+
+  .center{text-align:center;padding:60px 0}
+  .spin{width:34px;height:34px;border:4px solid var(--line);border-top-color:var(--ink);border-radius:50%;margin:0 auto 16px;animation:sp .9s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .note{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;margin:18px 0}
+</style>
+</head>
+<body>
+<header class="top">
+  <svg class="logo" viewBox="0 0 540 120" role="img" aria-label="L'chaim: Nourishing Life &amp; Spirit">
+    <g transform="translate(10, 0)">
+      <path d="M 55 18 L 55 10 M 39 24 L 34 19 M 71 24 L 76 19 M 28 40 L 20 38 M 82 40 L 90 38"
+            stroke="#D4A359" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 30 65 A 28 28 0 1 1 80 65"
+            fill="none" stroke="#2C3E35" stroke-width="3.8" stroke-linecap="round"/>
+      <path d="M 55 38 C 36 55 32 78 55 94 C 78 78 74 55 55 38 Z" fill="#4A6B5D" opacity="0.95"/>
+      <path d="M 55 94 C 50 81 50 65 55 54 C 60 65 60 81 55 94 Z" fill="#C87D55"/>
+    </g>
+    <text x="125" y="66" font-family="'Cinzel', Georgia, serif" font-size="44" font-weight="700" letter-spacing="2.8" fill="#2C3E35">L'chaim</text>
+    <text x="127" y="88" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="600" letter-spacing="4.5" fill="#C87D55" opacity="0.95">NOURISHING LIFE &amp; SPIRIT</text>
+  </svg>
+</header>
+<main id="app" aria-live="polite"></main>
+<footer>Your answers are combined with others' before the person sees any results, so individual responses stay private.</footer>
+
+<script src="config.js"></script>
+<script>
+const $ = (s, el) => (el || document).querySelector(s);
+const app = $('#app');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const call = (fn, params) => fetch(CONFIG.API_URL, {
+  method: 'POST',
+  body: JSON.stringify({ fn, ...(params || {}) })
+})
+  .then(res => res.json())
+  .then(data => {
+    if (!data || !data.ok) throw new Error((data && data.error) || 'Something went wrong. Please try again.');
+    return data.data;
+  })
+  .catch(err => { throw new Error(err.message || 'Could not reach the server. Please try again.'); });
+
+const sid = new URLSearchParams(location.search).get('s');
+
+function loading(text) {
+  app.innerHTML = `<div class="center"><div class="spin"></div><p>${esc(text)}</p></div>`;
+}
+
+function renderPicker(el, words, min, max) {
+  const selected = new Set();
+  function paint() {
+    el.querySelector('.count').textContent = `${selected.size} selected (choose ${min}–${max})`;
+    el.querySelectorAll('.chip').forEach(b => {
+      const on = selected.has(b.dataset.w);
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on);
+      b.disabled = !on && selected.size >= max;
+    });
+  }
+  el.innerHTML = `
+    <div class="picker-head"><span class="count"></span></div>
+    <div class="grid">${words.map(w => `<button type="button" class="chip" data-w="${esc(w)}" aria-pressed="false">${esc(w)}</button>`).join('')}</div>`;
+  el.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+    const w = b.dataset.w;
+    if (selected.has(w)) selected.delete(w); else if (selected.size < max) selected.add(w);
+    paint();
+  }));
+  paint();
+  return () => [...selected];
+}
+
+async function boot() {
+  if (!sid) {
+    app.innerHTML = `<h1 class="page">This link is incomplete.</h1><p class="lede">Ask whoever sent this for the full invite link.</p>`;
+    return;
+  }
+
+  // Guard against an accidental double-submit from the same browser (honour system, not security).
+  const doneKey = 'johari-done-' + sid;
+  if (localStorage.getItem(doneKey)) {
+    app.innerHTML = `<h1 class="page">Already sent.</h1><p class="lede">Thanks — your feedback for this person was already recorded from this device.</p>`;
+    return;
+  }
+
+  loading('Loading');
+  let info, meta;
+  try {
+    [info, meta] = await Promise.all([call('johariSessionInfo', { sessionId: sid }), call('johariGetAdjectives')]);
+  } catch (e) {
+    app.innerHTML = `<p class="err">${esc(e.message)}</p>`;
+    return;
+  }
+
+  app.innerHTML = `
+    <h1 class="page">Describe ${esc(info.firstName)} in a few words.</h1>
+    <p class="lede">Pick the words that genuinely describe ${esc(info.firstName)} at work. Be honest — this is what makes the exercise useful. ${esc(info.firstName)} will only see combined results once several colleagues have responded, so your individual answers stay private.</p>
+    <label>Your relationship to ${esc(info.firstName)} (optional)
+      <select id="rel">
+        <option value="">Prefer not to say</option>
+        <option>Manager</option>
+        <option>Peer or colleague</option>
+        <option>Direct report</option>
+        <option>Client or partner</option>
+        <option>Other</option>
+      </select>
+    </label>
+    <div id="picker"></div>
+    <p class="err" id="err" role="alert"></p>
+    <div class="actions"><button class="btn" type="button" id="send">Send feedback</button></div>`;
+
+  const getSelected = renderPicker($('#picker'), meta.adjectives, meta.min, meta.max);
+
+  $('#send').addEventListener('click', async () => {
+    const adjectives = getSelected();
+    if (adjectives.length < meta.min || adjectives.length > meta.max) {
+      return ($('#err').textContent = `Choose between ${meta.min} and ${meta.max} words.`);
+    }
+    loading('Sending');
+    try {
+      const res = await call('johariSubmitPeer', { payload: { sessionId: sid, relationship: $('#rel').value, adjectives } });
+      localStorage.setItem(doneKey, '1');
+      app.innerHTML = `
+        <h1 class="page">Thank you.</h1>
+        <p class="lede">Your feedback for ${esc(res.subjectFirstName)} has been recorded.</p>
+        <div class="note"><p class="fine" style="margin:0">${esc(res.subjectFirstName)} will not see who said what — only the combined picture once enough people have responded.</p></div>`;
+    } catch (e) {
+      $('#err').textContent = e.message;
+    }
+  });
+}
+
+boot();
+</script>
+</body>
+</html>
