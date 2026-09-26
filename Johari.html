@@ -230,7 +230,8 @@ function viewAuth(sessionId, msg) {
 
 function viewWaiting(data, email) {
   const pct = Math.min(100, Math.round((data.totalPeers / data.minPeers) * 100));
-  const peerLink = `${location.origin}${location.pathname.replace(/johari\.html$/, 'johari-peer.html')}?s=${data.sessionId}`;
+  const dir = location.href.slice(0, location.href.lastIndexOf('/') + 1).split('?')[0].split('#')[0];
+  const peerLink = `${dir}johari-peer.html?s=${data.sessionId}`;
   app.innerHTML = `
     <h1 class="page">Almost there, ${esc(String(data.name).split(' ')[0])}.</h1>
     <p class="lede">Your results unlock once ${data.minPeers} colleagues respond, so no single answer stands out.</p>
@@ -252,7 +253,6 @@ function viewWaiting(data, email) {
   });
   $('#back').addEventListener('click', () => { history.replaceState(null, '', location.pathname); viewStart(); });
 }
-
 function wordsBlock(items, showCount, cls) {
   if (!items.length) return '<p class="fine">No words landed here this time.</p>';
   return `<div class="words">${items.map(it => {
